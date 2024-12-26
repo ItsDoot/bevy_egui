@@ -9,6 +9,8 @@ use bevy::{
     },
 };
 use bevy_egui::{egui::Widget, EguiContexts, EguiPlugin, EguiUserTextures};
+use bevy_math::FloatOrd;
+use bevy_render::camera::ImageRenderTarget;
 
 fn main() {
     App::new()
@@ -105,7 +107,10 @@ fn setup(
             Camera {
                 // render before the "main pass" camera
                 order: -1,
-                target: RenderTarget::Image(image_handle),
+                target: RenderTarget::Image(ImageRenderTarget {
+                    handle: image_handle,
+                    scale_factor: FloatOrd(1.0),
+                }),
                 clear_color: ClearColorConfig::Custom(Color::srgba(1.0, 1.0, 1.0, 0.0)),
                 ..default()
             },
